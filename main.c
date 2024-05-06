@@ -7,8 +7,8 @@ int main() {
     int indexes[N];    //indexes - масив, в якому будуть зберігатися індекси знайдених помилок в реченні користувача в formula[N].
     //size = змінна у якій буде зберігатися кількість знайдених помилок для масиву індексів цілого типу даних indexes[N].
     printf("Введіть формулу:\n");
-    fgets(formula, N, stdin);
-    formula[strlen(formula) - 1] = '\0';
+    gets(formula);
+    /*formula[strlen(formula) - 1] = '\0';*/
     removeSpaces(formula);
     int size = checkScalarProcess(formula, indexes);
     if(size == 0) {

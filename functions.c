@@ -15,28 +15,36 @@ void removeSpaces(char word[]) {
 int checkScalarProcess(const char scalar[], int indexes[]) {
     static int index = 0;
     static int counter = 0;
-    static int seen_coma = 0;
     static int seen_dots = 0;
     static int found_constant = 0;
     static int index_of_first_symbol = 0;
     if (scalar[index] == '\0') {
+        if (found_constant && seen_dots == 0) {
+            indexes[counter++] = 0;
+        }
+        else if(scalar[strlen(scalar)-1] == '.') {
+            while (scalar[index] == '.') {
+                indexes[counter++] = index--;
+            }
+        }
         return counter;
     }
     if (scalar[index] == '.') {
         found_constant = 0;
         seen_dots++;
-        if (seen_dots == 2) {
+        if (seen_dots > 2) {
+            /*if (!isalnum(scalar[index+1] )) {
+                indexes[counter++] = index;
+            }*/
             index_of_first_symbol = index + 1;
         }
-    } else if (scalar[index] == ',') {
-        seen_coma = 1;
     }
-    if ((index == 0 || seen_dots == 2) && isdigit(scalar[index_of_first_symbol])) {
+    if ((index == 0 || seen_dots > 2) && isdigit(scalar[index_of_first_symbol])) {
         found_constant = 1;
     }
     if (index == 0 && !isalnum(scalar[index])) {
         indexes[counter++] = index;
-    } else if (!isalnum(scalar[index]) && scalar[index] != '.') {
+    } else if (!isalnum(scalar[index]) && scalar[index] != ',' && scalar[index] != '.') {
             indexes[counter++] = index;
     } else if (scalar[index] == ',' && (found_constant || seen_dots == 2)) {
         indexes[counter++] = index;
