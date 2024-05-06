@@ -23,6 +23,7 @@ int checkScalarProcess(const char scalar[], int indexes[]) {
             indexes[counter++] = 0;
         }
         else if(scalar[strlen(scalar)-1] == '.') {
+            index = strlen(scalar)-1;
             while (scalar[index] == '.') {
                 indexes[counter++] = index--;
             }
@@ -32,14 +33,14 @@ int checkScalarProcess(const char scalar[], int indexes[]) {
     if (scalar[index] == '.') {
         found_constant = 0;
         seen_dots++;
-        if (seen_dots > 2) {
+        if (seen_dots >= 2) {
             /*if (!isalnum(scalar[index+1] )) {
                 indexes[counter++] = index;
             }*/
             index_of_first_symbol = index + 1;
         }
     }
-    if ((index == 0 || seen_dots > 2) && isdigit(scalar[index_of_first_symbol])) {
+    if ((index == 0 || seen_dots >= 2) && isdigit(scalar[index_of_first_symbol])) {
         found_constant = 1;
     }
     if (index == 0 && !isalnum(scalar[index])) {
