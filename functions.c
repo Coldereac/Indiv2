@@ -14,12 +14,16 @@ void removeSpaces(char word[]) {
 // Перевіряє скаляр на наявність помилок. Якщо помилку знайдено,
 // додає її індекс до масиву indexes.
 int checkScalarProcess(const char scalar[], int indexes[]) {
+    if (strlen(scalar) == 0) {
+        return -1;
+    }
     // Статичні змінні для відстеження стану та індексів помилок
     static int index = 0; // Поточний індекс у скалярі
     static int counter = 0; // Кількість знайдених помилок
     static int seen_dots = 0; // Кількість крапок (.)
     static int found_constant = 0; // Чи знайдено константу (число)
     static int index_of_first_symbol = 0; // Індекс першого символу після крапок (.)
+
 
     // Кінець скаляра: перевірка на завершення перегляду
     if (scalar[index] == '\0') {
@@ -70,7 +74,6 @@ int checkScalarProcess(const char scalar[], int indexes[]) {
     } else if (found_constant && !isdigit(scalar[index]) && scalar[index] != ',' && scalar[index] != '.') {
         indexes[counter++] = index; // Помилка: символ після константи повинен бути цифрою, комою або крапкою
     }
-
     index++; // Перейти до наступного символу в скалярі
     return checkScalarProcess(scalar, indexes); // Рекурсивний виклик для перевірки решти скаляра
 }
